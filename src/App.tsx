@@ -2,18 +2,17 @@ import React, {useState} from 'react';
 
 import './App.css';
 
-import TodoTable from './components/TodoTable';
-import NewTodoForm from './components/NewTodoForm';
+import { TodoTable } from './components/TodoTable';
+import { NewTodoForm } from './components/NewTodoForm';
+import { TodoModel } from './models/TodoModel';
 
-function App() {
+export const App = () => {
 
   const [showAddTodoForm, setShowAddTodoForm] = useState(false);
 
-  const [todos, setTodos] = useState([
-    { rowNumber: 1, rowDescription: 'Feed puppy', rowAssigned: 'Anna' }
-  ]);
+  const [todos, setTodos] = useState([] as TodoModel[]);
 
-  const addTodo = (description, assigned) => {
+  const addTodo = (description: string, assigned: string) => {
     let rowNumder = 0;
 
     if (todos.length > 0) {
@@ -22,15 +21,11 @@ function App() {
       rowNumder = 1;
     }
 
-    const newTodo = {
-      rowNumber: rowNumder,
-      rowDescription: description,
-      rowAssigned: assigned
-    };
+    const newTodo = new TodoModel(rowNumder, description, assigned);
     setTodos(todos => [...todos, newTodo]);
   }
 
-  const deleteTodo = (deleteTodoRowNumber) => {
+  const deleteTodo = (deleteTodoRowNumber: number) => {
     let filtered = todos.filter(function (value) {
       return value.rowNumber !== deleteTodoRowNumber;
     });
@@ -59,5 +54,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
